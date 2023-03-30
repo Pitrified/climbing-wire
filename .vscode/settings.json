@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "astype",
         "dtype",
         "FLANN",
         "homographies",
@@ -12,5 +13,6 @@
         "polylines",
         "RANSAC",
         "wireframe"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }
