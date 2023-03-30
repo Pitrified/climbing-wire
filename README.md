@@ -72,6 +72,14 @@
 * init
 * add frames one by one
 
+1. compute homography previous to current
+1. convert previous points to current
+1. compute landmarks for current frame
+1. append to the list of landmarks
+1. plot the landmarks on the current frame
+
+we lose the first frame but we don't care
+
 ## Resources
 
 ### Pose tracking
