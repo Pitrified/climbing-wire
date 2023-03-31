@@ -1,27 +1,30 @@
 """Drawing utilities for landmarks."""
 
-from typing import List, Mapping, Optional, Tuple
+from typing import Mapping
 
 import cv2 as cv
+from loguru import logger as lg
 import mediapipe.python.solutions.drawing_styles as mp_drawing_styles
 import mediapipe.python.solutions.drawing_utils as mp_drawing
 import mediapipe.python.solutions.pose as mp_pose
 import numpy as np
-from loguru import logger as lg
 
 from climbing_wire.landmark.landmark_list import LandmarkListImg
-from climbing_wire.utils.mediapipe import get_spec_from_map
+from climbing_wire.utils.mediapipe import (
+    get_default_pose_connections,
+    get_spec_from_map,
+)
 
 
 def draw_landmarks(
     image: np.ndarray,
     landmarks: LandmarkListImg,
-    pose_connections: List[Tuple[int, int]] | None = None,
+    pose_connections: list[tuple[int, int]] | None = get_default_pose_connections(),
     landmark_drawing_spec: mp_drawing.DrawingSpec
     | Mapping[int, mp_drawing.DrawingSpec]
     | None = mp_drawing.DrawingSpec(color=mp_drawing.RED_COLOR),
     connection_drawing_spec: mp_drawing.DrawingSpec
-    | Mapping[Tuple[int, int], mp_drawing.DrawingSpec]
+    | Mapping[tuple[int, int], mp_drawing.DrawingSpec]
     | None = mp_drawing.DrawingSpec(),
 ) -> None:
     """Draw the landmarks and the connections on an image.
@@ -34,6 +37,8 @@ def draw_landmarks(
         pose_connections: A list of landmark index tuples that specifies how
             landmarks to be connected in the drawing. If this argument is
             explicitly set to None, no landmark connections will be drawn.
+            Defaults to the pose connections defined in
+            https://google.github.io/mediapipe/solutions/pose.html#pose-landmark-model-blazepose-ghum-3d .
         landmark_drawing_spec: Either a DrawingSpec object or a mapping from hand
             landmarks to the DrawingSpecs that specifies the landmarks' drawing
             settings such as color, line thickness, and circle radius. If this

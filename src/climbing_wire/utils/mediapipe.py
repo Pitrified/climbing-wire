@@ -1,6 +1,7 @@
 """Misc utils for landmark detection."""
 
-from typing import List, Mapping, Tuple, TypeVar, cast
+from enum import IntEnum
+from typing import Literal, Mapping, TypeVar, cast, get_args
 
 import mediapipe.python.solutions.drawing_styles as mp_drawing_styles
 import mediapipe.python.solutions.drawing_utils as mp_drawing
@@ -9,10 +10,16 @@ import numpy as np
 
 T = TypeVar("T")
 
+POSE_LANDMARKS_NAMES = mp_pose.PoseLandmark._member_names_
+POSE_LANDMARKS_MAP = cast(dict[str, IntEnum], mp_pose.PoseLandmark._member_map_)
+
+JOINT_NAMES_TYPE = Literal["left_hand", "right_hand", "left_foot", "right_foot"]
+JOINT_NAMES = get_args(JOINT_NAMES_TYPE)
+
 
 def normalized_to_pixel_coordinates(
     normalized_points: np.ndarray,
-    image_size: Tuple[int, int],
+    image_size: tuple[int, int],
     clip_to_image: bool = True,
 ) -> np.ndarray:
     """Convert normalized value pair to pixel coordinates.
@@ -58,10 +65,10 @@ def get_spec_from_map(
     return drawing_spec
 
 
-def get_default_pose_connections() -> List[Tuple[int, int]]:
+def get_default_pose_connections() -> list[tuple[int, int]]:
     """Get the default pose connections.
 
     Cast the connections to a list of tuples for the sake of type checking.
     """
-    pose_connections = cast(List[Tuple[int, int]], mp_pose.POSE_CONNECTIONS)
+    pose_connections = cast(list[tuple[int, int]], mp_pose.POSE_CONNECTIONS)
     return pose_connections
