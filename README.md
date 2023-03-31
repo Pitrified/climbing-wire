@@ -26,6 +26,12 @@
 1. Plot it.
 1. Assemble the video
 
+### Phantom trace
+
+1. Leave a trace in the video.
+1. Get segmentation mask.
+1. Blend the person on the current frame, use lower opacity for older frames.
+
 ## Open points and ideas
 
 * if a landmark is missing try to use the others
@@ -40,6 +46,10 @@
 * consider the framerate when using DTW
 
 * as we can segment person/background, we could build the background by stitching it from frames where the person is not there, thus needing a single video
+
+* tune visibility threshold for landmarks, might need some outliers removal
+  (we can leverage the visibility of the landmarks to remove outliers)
+* plot landmarks with different colors depending on visibility
 
 ## Package structure
 
