@@ -9,6 +9,7 @@ from typing import Generator, Tuple
 import cv2 as cv
 import numpy as np
 
+
 def pairwise_video_frames(
     in_vid_path: Path,
     msec_interval: int = 0,
@@ -20,6 +21,17 @@ def pairwise_video_frames(
         msec_interval: Interval between frames in milliseconds.
     """
     yield from pairwise(iterate_video_frames(in_vid_path, msec_interval))
+
+
+def first_video_frame(
+    in_vid_path: Path,
+) -> np.ndarray:
+    """First frame from video.
+
+    Args:
+        in_vid_path: Input video file.
+    """
+    return next(iterate_video_frames(in_vid_path))
 
 
 def iterate_video_frames(
@@ -50,3 +62,6 @@ def iterate_video_frames(
 
         yield frame
         count = count + 1
+
+    # close the feed
+    cap.release()
