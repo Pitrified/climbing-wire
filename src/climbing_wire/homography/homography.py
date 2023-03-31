@@ -58,3 +58,22 @@ def compute_homography(
         raise ValueError("Not enough matches found.")
 
     return M
+
+
+def perspective_transform(points: np.ndarray, M: np.ndarray) -> np.ndarray:
+    """Transform a set of points using a given 3x3 transformation matrix.
+
+    Args:
+        points: A numpy array of shape (N, 2) representing the input points.
+        M: A numpy array of shape (3, 3) representing the transformation matrix.
+
+    Returns:
+        A numpy array of shape (N, 2) representing the transformed points.
+    """
+    # Reshape the input points to the format expected by cv.perspectiveTransform
+    points = points.reshape(-1, 1, 2)
+    # Transform the points using the given matrix
+    transformed_points = cv.perspectiveTransform(points, M)
+    # Reshape the output points back to the original format
+    transformed_points = transformed_points.reshape(-1, 2)
+    return transformed_points
