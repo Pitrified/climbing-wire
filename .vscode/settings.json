@@ -16,5 +16,6 @@
         "RANSAC",
         "wireframe"
     ],
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "basic",
+    "search.useIgnoreFiles": false
 }

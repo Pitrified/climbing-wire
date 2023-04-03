@@ -32,11 +32,14 @@
 1. Get segmentation mask.
 1. Blend the person on the current frame, use lower opacity for older frames.
 
+### Background stitching
+
+* as we can segment person/background, we could build the background by stitching it from frames where the person is not there, thus needing a single video
+
 ## Open points and ideas
 
 * if a landmark is missing try to use the others
 * how to transform a whole wireframe (LandmarkListImg)
-* line thickness proportional to speed
 * how to deal with sharp movement
 * image -> segmentation mask ?
 * should compute_homography be part of a class?
@@ -45,11 +48,25 @@
 
 * consider the framerate when using DTW
 
-* as we can segment person/background, we could build the background by stitching it from frames where the person is not there, thus needing a single video
-
 * tune visibility threshold for landmarks, might need some outliers removal
   (we can leverage the visibility of the landmarks to remove outliers)
+* inside a plotter class to draw joint traces ?
 * plot landmarks with different colors depending on visibility
+* line thickness proportional to speed
+
+* LandHist to track a single joint in the past, keep track of visibility and update with homography old landmarks
+
+* Initializing the jointTracker with the first frame solves several problems:
+  - we can call the process func just with the next frame
+  - if the landmark computation fails we do not update the `prev_frame` variable and can try with the next frame; currently we lose one step of the homography chain
+  - we can use the landmarks from the first frame to initialize the `prev_landmarks` variable
+* but the first frame could fail the landmark computation, so we might need the second frame and so on
+* also the second frame might fail, so we need to keep track of the last frame that worked
+
+* identify stable points for a joint position and use them to draw the wireframe only for those frames
+
+* width and height are not rows and columns, but height and width
+  definitely check which is which and be consistent between numpy and opencv
 
 ## Package structure
 
@@ -59,7 +76,7 @@
 * [x] perspectiveTransform (with auto reshaping, and auto cast float-int)
 * [x] cv_imshow
 * [ ] draw matches + polylines
-* [ ] warpPerspective
+* [ ] warpPerspective + with mask (to be able to warp only the person (or only the background from future frames))
 
 #### mediapipe and landmark
 
@@ -89,6 +106,8 @@
 1. plot the landmarks on the current frame
 
 we lose the first frame but we don't care
+
+verify that the composition of the homographies is the same as the homography between the first and the last frame
 
 ## Resources
 
