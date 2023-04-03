@@ -8,6 +8,7 @@ import numpy as np
 
 from climbing_wire.utils.mediapipe import (
     POSE_LANDMARKS_MAP,
+    POSE_LANDMARKS_NAMES,
     are_valid_normalized_points,
     normalized_to_pixel_coordinates,
 )
@@ -41,6 +42,13 @@ class LandmarkListNp:
     def __len__(self) -> int:
         """Return the number of landmarks in the list."""
         return len(self.landmarks_norm)
+
+    def __repr__(self) -> str:
+        """Return a string representation of the object."""
+        r = ""
+        for lname, lpos in zip(POSE_LANDMARKS_NAMES, self.landmarks_norm):
+            r += f"{lname:>19s} {lpos[0]:.3f} {lpos[1]:.3f} \n"
+        return r
 
 
 class LandmarkListImg(LandmarkListNp):
@@ -79,14 +87,19 @@ class LandmarkListImg(LandmarkListNp):
 
     def __repr__(self) -> str:
         """Return a string representation of the object."""
+        r = ""
+        for lname, lpos, viz, draw in zip(
+            POSE_LANDMARKS_NAMES, self.landmarks_img, self.visibility, self.drawable
+        ):
+            r += f"{lname:>19s} {lpos} {viz:.3f} {draw}\n"
+        return r
+
+    def __str__(self) -> str:
+        """Return a string representation of the object."""
         return (
             f"{self.__class__.__name__}"
             f"({self.drawable.sum()}/{len(self.drawable)} drawable)"
         )
-
-    def __str__(self) -> str:
-        """Return a string representation of the object."""
-        return self.__repr__()
 
     def get_landmark_for_joint(
         self,
@@ -96,11 +109,10 @@ class LandmarkListImg(LandmarkListNp):
             "left_foot",
             "right_foot",
         ],
-        return_shape: Literal["1x2", "2"] = "1x2",
-    ) -> np.ndarray | None:
-        """Get the landmark for a joint.
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """Get the position of a joint, and a visibility value.
 
-        If a joint is not drawable, return None.
+        The point will be returned as a 1x2 array.
 
         TODO: consider a mean of the landmarks for a joint,
             to provide a more robust estimate of the joint position.
@@ -118,11 +130,4 @@ class LandmarkListImg(LandmarkListNp):
         elif which_landmark == "right_foot":
             land_idx = POSE_LANDMARKS_MAP["RIGHT_ANKLE"]
 
-        if not self.drawable[land_idx]:
-            lg.warning(f"{land_idx=} not drawable")
-            return None
-
-        if return_shape == "1x2":
-            return self.landmarks_img[land_idx : land_idx + 1, :]
-        elif return_shape == "2":
-            return self.landmarks_img[land_idx, :]
+        return self.landmarks_img[land_idx : land_idx + 1, :], self.visibility[land_idx]

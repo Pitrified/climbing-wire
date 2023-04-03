@@ -28,7 +28,7 @@ def normalized_to_pixel_coordinates(
 
     Vectorized version of drawing_utils._normalized_to_pixel_coordinates
     """
-    image_width, image_height = image_size
+    image_height, image_width = image_size
     x_px = np.floor(normalized_points[:, 0] * image_width).astype(int)
     y_px = np.floor(normalized_points[:, 1] * image_height).astype(int)
     if clip_to_image:

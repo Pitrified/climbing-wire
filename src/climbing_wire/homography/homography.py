@@ -70,6 +70,9 @@ def perspective_transform(points: np.ndarray, M: np.ndarray) -> np.ndarray:
     Returns:
         A numpy array of shape (N, 2) representing the transformed points.
     """
+    # check if the input contains any points
+    if len(points) == 0:
+        return points
     # Reshape the input points to the format expected by cv.perspectiveTransform
     points = points.reshape(-1, 1, 2)
     # Transform the points using the given matrix
