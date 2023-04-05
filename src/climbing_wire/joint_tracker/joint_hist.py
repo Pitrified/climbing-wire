@@ -3,8 +3,11 @@
 A joint might be a landmark or the mean of multiple landmarks.
 """
 
+from typing import Self
 
+from loguru import logger as lg
 import numpy as np
+
 from climbing_wire.homography.homography import perspective_transform
 from climbing_wire.landmark.landmark_list import LandmarkListImg
 from climbing_wire.utils.mediapipe import JOINT_NAMES_TYPE
@@ -44,3 +47,11 @@ class JointHist:
     def __len__(self) -> int:
         """Return the number of frames in the history."""
         return len(self.track)
+
+    def copy(self) -> Self:
+        """Return a copy of the JointHist."""
+        # lg.debug("Copying JointHist.")
+        jh = JointHist(self.which_joint)
+        jh.track = self.track.copy()
+        jh.visibility = self.visibility.copy()
+        return jh

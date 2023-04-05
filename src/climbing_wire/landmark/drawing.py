@@ -22,7 +22,7 @@ def draw_landmarks(
     pose_connections: list[tuple[int, int]] | None = get_default_pose_connections(),
     landmark_drawing_spec: mp_drawing.DrawingSpec
     | Mapping[int, mp_drawing.DrawingSpec]
-    | None = mp_drawing.DrawingSpec(color=mp_drawing.RED_COLOR),
+    | None = mp_drawing_styles.get_default_pose_landmarks_style(),
     connection_drawing_spec: mp_drawing.DrawingSpec
     | Mapping[tuple[int, int], mp_drawing.DrawingSpec]
     | None = mp_drawing.DrawingSpec(),

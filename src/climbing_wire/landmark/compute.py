@@ -74,7 +74,7 @@ class PoseImg:
             visibility_threshold (float | None): Minimum visibility value for a landmark.
                 Set to None to use the default visibility threshold.
                 Defaults to None.
-            
+
         Returns:
             LandmarkListImg | None: The landmarks in image coordinates.
         """
@@ -92,6 +92,10 @@ class PoseImg:
     def __del__(self) -> None:
         """Close the pose object."""
         self.pose.close()
+
+    def close(self) -> None:
+        """Close the pose object."""
+        self.__del__()
 
     def __enter__(self) -> Self:
         """Enter the context."""

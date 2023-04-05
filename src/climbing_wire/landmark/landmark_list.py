@@ -1,6 +1,6 @@
 """A LandmarkList as numpy arrays."""
 
-from typing import Literal
+from typing import Literal, Self
 
 from loguru import logger as lg
 from mediapipe.framework.formats import landmark_pb2
@@ -38,6 +38,9 @@ class LandmarkListNp:
             visibility_ls.append((landmark.visibility))
         self.landmarks_norm = np.array(landmarks_norm_ls)
         self.visibility = np.array(visibility_ls)
+        # so that we can create a copy of this object
+        # meh
+        self.pose_landmarks = pose_landmarks
 
     def __len__(self) -> int:
         """Return the number of landmarks in the list."""
@@ -131,3 +134,12 @@ class LandmarkListImg(LandmarkListNp):
             land_idx = POSE_LANDMARKS_MAP["RIGHT_ANKLE"]
 
         return self.landmarks_img[land_idx : land_idx + 1, :], self.visibility[land_idx]
+
+    def copy(self) -> Self:
+        """Return a copy of the object."""
+        # lg.debug("Copying LandmarkListImg.")
+        return LandmarkListImg(
+            self.pose_landmarks,
+            self.img_shape,
+            self.visibility_threshold,
+        )

@@ -10,7 +10,11 @@ def cv_imshow(
     img: np.ndarray,
     ax: plt.Axes | None = None,
 ) -> None:
-    """Show a BGR img properly."""
+    """Show a BGR img properly.
+    
+    If ax is not None, then the image is plotted on the given axis,
+    and the function returns without showing the image with plt.show().
+    """
     # TODO auto detect image type (if it's grayscale)
     # img1 = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     img1 = cv.cvtColor(img, cv.COLOR_BGR2RGB)
