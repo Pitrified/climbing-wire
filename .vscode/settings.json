@@ -10,9 +10,12 @@
         "KDTREE",
         "keypoints",
         "landlist",
+        "matplotlib",
         "mediapipe",
         "ndarray",
+        "opencv",
         "polylines",
+        "pyplot",
         "RANSAC",
         "wireframe"
     ],

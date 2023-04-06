@@ -9,6 +9,7 @@
 # data files
 *.csv
 *.parquet
+data/
 
 # notebooks
 *.ipynb

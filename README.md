@@ -82,6 +82,13 @@ Here we see an example of the excellent Andrea climbing:
 * reload the landmarks with a helper func that converts the json (?) to a LandmarkListImg,
   possibly by building a NormalizedLandmarkList.
 
+* as an android app, do the landmark and homography computation live,
+  and show the video with the wireframe and the tracks
+
+* if we compute the landmarks on a lower resolution image, do we lose precision?
+  and how much does it speed up the computation?
+  what about using a lower model complexity?
+
 ## Package structure
 
 #### opencv and homography
@@ -106,7 +113,7 @@ Here we see an example of the excellent Andrea climbing:
 
 * [ ] video iterator
 * [ ] video_to_frames
-* [ ] frames_to_video
+* [ ] frames_to_video (a coroutine? so that we can send frames to it)
 
 #### LimbTracker
 
