@@ -12,6 +12,10 @@
 1. Draw the landmarks on the current frame
 1. Assemble the video
 
+Here we see an example of the excellent Andrea climbing:
+
+![sample_joint_track_01](data/output/joint_track_01.png)
+
 ### Wireframe playback
 
 1. Load the videos.
@@ -45,6 +49,9 @@
 * should compute_homography be part of a class?
   so something like `ch = ComputeHomography(img1, img2)`
   and in ch you have all the intermediate results
+  (and you can call ch.plot_matches() or ch.plot_homography() or ch.plot_warped() or ch.warp(points))
+  (and we need them to compute the distance between the two frames)
+  the distance can just be the sum of the squared distances between the warped corners
 
 * consider the framerate when using DTW
 
@@ -67,6 +74,13 @@
 
 * width and height are not rows and columns, but height and width
   definitely check which is which and be consistent between numpy and opencv
+
+* compute the fps of the video and save the frames with a timestamp,
+  maybe with a lower resolution,
+  and save the landmarks with the same timestamp (at the original resolution)
+
+* reload the landmarks with a helper func that converts the json (?) to a LandmarkListImg,
+  possibly by building a NormalizedLandmarkList.
 
 ## Package structure
 
