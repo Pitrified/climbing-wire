@@ -89,6 +89,12 @@ Here we see an example of the excellent Andrea climbing:
   and how much does it speed up the computation?
   what about using a lower model complexity?
 
+* the video iterator is slow if the millisecond interval is small,
+  it's faster to just skip some frames.
+  if the interval is large, it's better to set the position.
+  and rather than a small interval, a keep-every-nth-frame is better for more
+  consistent intervals between frames.
+
 ## Package structure
 
 #### opencv and homography

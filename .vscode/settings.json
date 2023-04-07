@@ -17,7 +17,9 @@
         "polylines",
         "pyplot",
         "RANSAC",
-        "wireframe"
+        "usec",
+        "wireframe",
+        "μsec"
     ],
     "python.analysis.typeCheckingMode": "basic",
     "search.useIgnoreFiles": false
