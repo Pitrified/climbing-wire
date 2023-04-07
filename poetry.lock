@@ -387,6 +387,21 @@ files = [
 tests = ["asttokens", "littleutils", "pytest", "rich"]
 
 [[package]]
+name = "fastdtw"
+version = "0.3.4"
+description = "Dynamic Time Warping (DTW) algorithm with an O(N) time and memory complexity."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "fastdtw-0.3.4-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:28918c163dce9e736e09252a02073fce712bc4c7aa18f2a45d882cca84da2dbb"},
+    {file = "fastdtw-0.3.4.tar.gz", hash = "sha256:2350fa6ec36bcad186eaf81f46eff35181baf04e324f522de8aeb43d0243f64f"},
+]
+
+[package.dependencies]
+numpy = "*"
+
+[[package]]
 name = "flatbuffers"
 version = "23.3.3"
 description = "The FlatBuffers serialization format for Python"
@@ -1528,4 +1543,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "dc3b3320423fb425fa4422d04deb77c7b3c07048dd9505d6143d5387559736a9"
+content-hash = "35e8b640fb48d400b630d36cbf90c3248705fff943cf2af3ec00cdbc32d600fa"
