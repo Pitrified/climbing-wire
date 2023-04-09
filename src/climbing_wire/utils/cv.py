@@ -20,9 +20,12 @@ def cv_imshow(
     img1 = cv.cvtColor(img, cv.COLOR_BGR2RGB)
     if ax is not None:
         ax.imshow(img1)
-        return
-    plt.imshow(img1)
+        return 
+    fig, ax = plt.subplots(1, 1)
+    ax.imshow(img1)
     plt.show()
+    plt.close(fig)
+    # TODO should close the figure or return the ax?
 
 
 # def perspective_transform(

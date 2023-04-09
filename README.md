@@ -95,6 +95,11 @@ Here we see an example of the excellent Andrea climbing:
   and rather than a small interval, a keep-every-nth-frame is better for more
   consistent intervals between frames.
 
+* having an homography class lets us set up a progress bar
+  we somehow need to pass the func to dtw so that it's linked to the class
+
+* if we use the slow dtw does the matching improve?
+
 ## Package structure
 
 #### opencv and homography
