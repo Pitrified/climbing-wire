@@ -11,6 +11,8 @@ import cv2 as cv
 from loguru import logger as lg
 import numpy as np
 
+from climbing_wire.video.frame import Frame
+
 
 def pairwise_video_frames(
     in_vid_path: Path,
@@ -119,18 +121,16 @@ def iterate_video_frames_with_timestamp(
     # moving the cap definition outside the try block lets it be used in the
     # finally block, but if something goes wrong before we even get to the try
     # block, then we never get to the finally block ? mmm
-    
+
     # if you really want a msec_interval,
     # we could compute the keep_every_nth_frame from that and the fps
     # and if we need to skip many frames we could use the set(CAP_PROP_POS_MSEC)
     # (at that point a small change in frame interval does not matter)
 
     try:
-
         count = 0
         success = True
         while success:
-
             # extract the frame
             success, frame = cap.read()
             if not success:
@@ -151,3 +151,33 @@ def iterate_video_frames_with_timestamp(
         # close the feed
         # lg.info(f"Closing video feed")
         cap.release()
+
+
+def list_video_frames_with_timestamp(
+    in_vid_path: Path,
+    keep_every_nth_frame: int = 1,
+    max_frame_count: int = 0,
+) -> list[Frame]:
+    """Extract frames from video, return them as a list."""
+    frames: list[Frame] = []
+
+    # we need the fps for this, so we might need to open the cap here?
+    # fps = 30
+    # print(
+    #     f"will keep a frame every {keep_every_nth_frame * fps} milliseconds,"
+    #     f" will load {fps * keep_every_nth_frame * max_num_frames} milliseconds"
+    # )
+
+    frame_num = 0
+    for frame, usec in iterate_video_frames_with_timestamp(
+        in_vid_path,
+        keep_every_nth_frame=keep_every_nth_frame,
+    ):
+        f = Frame(frame=frame, usec=usec, idx=frame_num)
+        frames.append(f)
+
+        frame_num += 1
+        if max_frame_count > 0 and frame_num >= max_frame_count:
+            break
+
+    return frames
