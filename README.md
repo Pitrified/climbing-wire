@@ -100,6 +100,11 @@ Here we see an example of the excellent Andrea climbing:
 
 * if we use the slow dtw does the matching improve?
 
+* if you get multiple match for the same person frame to several empty frames,
+  you can just select a mean of the matches
+
+* rather than picking the best match and change empty frame every few person frame, advance the empty video for a fixed amount of time, then stop for a while, then advance again; this way we can have a more consistent panning alternated to a more stable view.
+
 ## Package structure
 
 #### opencv and homography
